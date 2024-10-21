@@ -1,10 +1,10 @@
-export default function HomePage() {
+export default function UsersPage() {
   return (
     <>
       <div>
         <div className="container">
           <div className="row">
-            <h1>Home Page</h1>
+            <h1>Users Page</h1>
           </div>
         </div>
       </div>

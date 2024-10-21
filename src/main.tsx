@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Root } from "./routes/index.ts";
-import ErrorPage from "./routes/error-page.tsx";
+import { ErrorPage, Root, HomePage, UsersPage } from "./routes";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
   {
@@ -11,6 +11,17 @@ const router = createBrowserRouter([
     children: [
       {
         errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <HomePage />
+          },
+          {
+            path: "/users",
+            element: <UsersPage />
+          },
+          
+        ]
       },
     ],
   },
