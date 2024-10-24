@@ -1,6 +1,14 @@
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ErrorPage, Root, HomePage, UsersPage } from "./routes";
+import {
+  ErrorPage,
+  Root,
+  HomePage,
+  UsersPage,
+  usersLoader,
+  userLoader,
+  UserPage,
+} from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
@@ -14,14 +22,19 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <HomePage />
+            element: <HomePage />,
           },
           {
             path: "/users",
-            element: <UsersPage />
+            loader: usersLoader as any,
+            element: <UsersPage />,
           },
-          
-        ]
+          {
+            path: "/users/:userId",
+            loader: userLoader as any,
+            element: <UserPage />,
+          },
+        ],
       },
     ],
   },
