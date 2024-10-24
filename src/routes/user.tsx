@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Card, ListGroup } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useLoaderData, useParams } from "react-router-dom";
@@ -48,7 +48,7 @@ async function getPosts() {
 async function getAlbums() {
   const response = await fetch("https://jsonplaceholder.typicode.com/albums/");
   const albumsData = await response.json();
-  console.log(albumsData);
+  //console.log(albumsData);
   return albumsData;
 }
 
@@ -72,9 +72,12 @@ export default function UserPage() {
       const postsData = await getPosts();
       //console.log("postsData --> " + JSON.stringify(postsData));
       const albumsData = await getAlbums();
+      const todosData = await getTodos();
 
       const userAlbums = albumsData.filter((el) => el.userId == 1);
-      console.log("user albums --> " + userAlbums);
+      const userTodos = todosData.filter((el) => el.userId == 1);
+      //console.log("user albums --> " + userAlbums);
+      setTodos(userTodos);
       setAlbums(userAlbums);
       setPosts(postsData);
     })();
@@ -87,33 +90,34 @@ export default function UserPage() {
           <div className="row">
             <h1 className="mb-3">Users Page</h1>
             <Tabs
-              defaultActiveKey="profile"
-              id="uncontrolled-tab-example"
+              defaultActiveKey="user"
+              id="user-tab"
               className="mb-3"
             >
               <Tab eventKey="home" title="User">
-                <p>{userId}</p>
-                <p>{user.name}</p>
-                <p>{user.username}</p>
-                <p>{user.address.city}</p>
-                <p>{user.address.street}</p>
-                <p>{JSON.stringify(posts[0])}</p>
-                {albums.map((n) => n.id)}
+                <Card style={{ width: "18rem" }}>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>User ID: {userId}</ListGroup.Item>
+                    <ListGroup.Item>User Name: {user.name}</ListGroup.Item>
+                    <ListGroup.Item>Username: {user.username}</ListGroup.Item>
+                    <ListGroup.Item>City: {user.address.city}</ListGroup.Item>
+                    <ListGroup.Item>
+                      Street: {user.address.street}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card>
               </Tab>
               <Tab eventKey="album" title="Album">
                 {albums.map((album, key) => (
                   <>
-                    <div className="card my-1">
+                    <div className="card my-3">
                       <div className="card-header d-flex justify-content-between">
-                        {album.id}
                         <button
                           type="button"
                           className="btn btn-sm btn-outline-success disabled "
                         >
                           Album ID{" "}
-                          <span className="badge text-dark">
-                            {album.id}
-                          </span>
+                          <span className="badge text-dark">{album.id}</span>
                         </button>
                       </div>
                       <div className="card-body">
@@ -135,7 +139,39 @@ export default function UserPage() {
                 ))}
               </Tab>
               <Tab eventKey="todos" title="Todos">
-                Tab content for Contact
+                {todos.map((todo, key) => (
+                  <>
+                    <div className="card my-1">
+                      <div className="card-header d-flex justify-content-between">
+                        {todo.id}
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-success disabled "
+                        >
+                          Todo ID{" "}
+                          <span className="badge text-dark">{todo.id}</span>
+                        </button>
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">{todo.title}</h5>
+                        <div className="d-flex justify-content-end">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline-success disabled"
+                          >
+                            User ID{" "}
+                            <span className="badge text-dark ">
+                              {todo.userId}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </Tab>
+              <Tab eventKey="posts" title="Posts">
+                posts
               </Tab>
             </Tabs>
           </div>
