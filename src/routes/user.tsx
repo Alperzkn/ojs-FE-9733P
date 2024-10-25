@@ -76,10 +76,11 @@ export default function UserPage() {
 
       const userAlbums = albumsData.filter((el) => el.userId == 1);
       const userTodos = todosData.filter((el) => el.userId == 1);
+      const userPosts = postsData.filter((el) => el.userId == 1);
       //console.log("user albums --> " + userAlbums);
       setTodos(userTodos);
       setAlbums(userAlbums);
-      setPosts(postsData);
+      setPosts(userPosts);
     })();
   }, []);
 
@@ -88,13 +89,9 @@ export default function UserPage() {
       <div>
         <div className="container">
           <div className="row">
-            <h1 className="mb-3">Users Page</h1>
-            <Tabs
-              defaultActiveKey="user"
-              id="user-tab"
-              className="mb-3"
-            >
-              <Tab eventKey="home" title="User">
+            <h1 className="mb-3">User Page</h1>
+            <Tabs defaultActiveKey="user" id="user-tab" className="mb-3">
+              <Tab eventKey="user" title="User">
                 <Card style={{ width: "18rem" }}>
                   <ListGroup variant="flush">
                     <ListGroup.Item>User ID: {userId}</ListGroup.Item>
@@ -141,9 +138,8 @@ export default function UserPage() {
               <Tab eventKey="todos" title="Todos">
                 {todos.map((todo, key) => (
                   <>
-                    <div className="card my-1">
+                    <div className="card my-3">
                       <div className="card-header d-flex justify-content-between">
-                        {todo.id}
                         <button
                           type="button"
                           className="btn btn-sm btn-outline-success disabled "
@@ -171,7 +167,36 @@ export default function UserPage() {
                 ))}
               </Tab>
               <Tab eventKey="posts" title="Posts">
-                posts
+                {posts.map((post, key) => (
+                  <>
+                    <div className="card my-3">
+                      <div className="card-header d-flex justify-content-between">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-success disabled "
+                        >
+                          Post ID{" "}
+                          <span className="badge text-dark">{post.id}</span>
+                        </button>
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">{post.title}</h5>
+                        <p>{post.body}</p>
+                        <div className="d-flex justify-content-end">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline-success disabled"
+                          >
+                            User ID{" "}
+                            <span className="badge text-dark ">
+                              {post.userId}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ))}
               </Tab>
             </Tabs>
           </div>
