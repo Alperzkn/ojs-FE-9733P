@@ -8,6 +8,10 @@ import {
   usersLoader,
   userLoader,
   UserPage,
+  PostPage,
+  postLoader,
+  albumLoader,
+  AlbumPage,
 } from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -34,6 +38,16 @@ const router = createBrowserRouter([
             loader: userLoader as any,
             element: <UserPage />,
           },
+          {
+            path: "/users/:userId/posts/:postId",
+            loader: postLoader as any,
+            element: <PostPage />,
+          },
+          {
+            path: "/users/:userId/albums/:albumId",
+            loader: albumLoader as any,
+            element: <AlbumPage />
+          }
         ],
       },
     ],

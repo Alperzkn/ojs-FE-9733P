@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Accordion, Card, ListGroup } from "react-bootstrap";
+import { Card, ListGroup, Nav } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useLoaderData, useParams } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+import { NavLink } from "react-router-dom";
 
 interface User {
   id: number;
@@ -68,7 +69,6 @@ export default function UserPage() {
 
   const { user } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
   const { userId } = useParams() as unknown as LoaderParams;
-  //console.log("user address -->  " + user.address);
 
   useEffect(() => {
     (async () => {
@@ -79,9 +79,9 @@ export default function UserPage() {
         const albumsData = await getAlbums();
         const todosData = await getTodos();
 
-        const userAlbums = albumsData.filter((el) => el.userId == 1);
-        const userTodos = todosData.filter((el) => el.userId == 1);
-        const userPosts = postsData.filter((el) => el.userId == 1);
+        const userAlbums = albumsData.filter((el: any) => el.userId == userId);
+        const userTodos = todosData.filter((el: any) => el.userId == userId);
+        const userPosts = postsData.filter((el: any) => el.userId == userId);
         //console.log("user albums --> " + userAlbums);
         setTodos(userTodos);
         setAlbums(userAlbums);
@@ -160,7 +160,6 @@ export default function UserPage() {
               </Tab>
               <Tab eventKey="todos" title="Todos">
                 {loading && <Spinner animation="grow" />}
-
                 {!loading &&
                   todos.map((todo, key) => (
                     <>
@@ -197,6 +196,7 @@ export default function UserPage() {
                 {!loading &&
                   posts.map((post, key) => (
                     <>
+                    <Nav.Link as={NavLink} to={"/users/" + user.id + "/posts/" + post.id}>
                       <div className="card my-3">
                         <div className="card-header d-flex justify-content-between">
                           <button
@@ -223,6 +223,7 @@ export default function UserPage() {
                           </div>
                         </div>
                       </div>
+                      </Nav.Link>
                     </>
                   ))}
               </Tab>
