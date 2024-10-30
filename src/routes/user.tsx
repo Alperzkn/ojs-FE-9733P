@@ -130,31 +130,38 @@ export default function UserPage() {
                 {!loading &&
                   albums.map((album, key) => (
                     <>
-                      <div className="card my-3">
-                        <div className="card-header d-flex justify-content-between">
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-success disabled "
-                          >
-                            Album ID{" "}
-                            <span className="badge text-dark">{album.id}</span>
-                          </button>
-                        </div>
-                        <div className="card-body">
-                          <h5 className="card-title">{album.title}</h5>
-                          <div className="d-flex justify-content-end">
+                      <Nav.Link
+                        as={NavLink}
+                        to={"/users/" + user.id + "/albums/" + album.id}
+                      >
+                        <div className="card my-3">
+                          <div className="card-header d-flex justify-content-between">
                             <button
                               type="button"
-                              className="btn btn-sm btn-outline-success disabled"
+                              className="btn btn-sm btn-outline-success disabled "
                             >
-                              User ID{" "}
-                              <span className="badge text-dark ">
-                                {album.userId}
+                              Album ID{" "}
+                              <span className="badge text-dark">
+                                {album.id}
                               </span>
                             </button>
                           </div>
+                          <div className="card-body">
+                            <h5 className="card-title">{album.title}</h5>
+                            <div className="d-flex justify-content-end">
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-success disabled"
+                              >
+                                User ID{" "}
+                                <span className="badge text-dark ">
+                                  {album.userId}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      </Nav.Link>
                     </>
                   ))}
               </Tab>
@@ -196,33 +203,36 @@ export default function UserPage() {
                 {!loading &&
                   posts.map((post, key) => (
                     <>
-                    <Nav.Link as={NavLink} to={"/users/" + user.id + "/posts/" + post.id}>
-                      <div className="card my-3">
-                        <div className="card-header d-flex justify-content-between">
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-success disabled "
-                          >
-                            Post ID{" "}
-                            <span className="badge text-dark">{post.id}</span>
-                          </button>
-                        </div>
-                        <div className="card-body">
-                          <h5 className="card-title">{post.title}</h5>
-                          <p>{post.body}</p>
-                          <div className="d-flex justify-content-end">
+                      <Nav.Link
+                        as={NavLink}
+                        to={"/users/" + user.id + "/posts/" + post.id}
+                      >
+                        <div className="card my-3">
+                          <div className="card-header d-flex justify-content-between">
                             <button
                               type="button"
-                              className="btn btn-sm btn-outline-success disabled"
+                              className="btn btn-sm btn-outline-success disabled "
                             >
-                              User ID{" "}
-                              <span className="badge text-dark ">
-                                {post.userId}
-                              </span>
+                              Post ID{" "}
+                              <span className="badge text-dark">{post.id}</span>
                             </button>
                           </div>
+                          <div className="card-body">
+                            <h5 className="card-title">{post.title}</h5>
+                            <p>{post.body}</p>
+                            <div className="d-flex justify-content-end">
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-success disabled"
+                              >
+                                User ID{" "}
+                                <span className="badge text-dark ">
+                                  {post.userId}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
                       </Nav.Link>
                     </>
                   ))}
